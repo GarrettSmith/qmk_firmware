@@ -31,15 +31,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-#define TAPPING_TERM 100
+#define TAPPING_TERM 150
 #define PERMISSIVE_HOLD
 #define TAPPING_FORCE_HOLD
-
 #define PREVENT_STUCK_MODIFIERS
+#define IGNORE_MOD_TAP_INTERRUPT
 
 #define FORCE_NKRO
 
 #undef RGBLED_NUM
+// #define RGBLIGHT_SLEEP
 #define RGBLIGHT_ANIMATIONS
 #define RGBLED_NUM 12
 #define RGBLIGHT_HUE_STEP 8
