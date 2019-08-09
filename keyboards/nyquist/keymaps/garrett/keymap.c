@@ -42,18 +42,22 @@ extern keymap_config_t keymap_config;
 // Macro Keys
 enum custom_keycodes {
   FN_PSTE = SAFE_RANGE,
+  FN_COPY,
+  FN_CUT,
   FN_DWRD,
   FN_FWRD,
   FN_BWRD,
-  FN_CLER,
+  FN_CLR,
   FN_OPEN,
+  FN_FIND,
 
   FN_SNIP,
   FN_PRWN,
 
   FN_QUIT,
   FN_MLFT,
-  FN_MRHT
+  FN_MRHT,
+  FN_WINS,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -104,11 +108,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ┌─━━─━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━┐ ┌─━━─━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┐
     KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12, \
 // ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
-    XXXXXXX, FN_QUIT, FN_DWRD, KC_END,  KC_MPRV, XXXXXXX,  KC_COPY, KC_PGUP, KC_INS,  FN_OPEN, FN_PSTE, XXXXXXX,\
+    FN_WINS, FN_QUIT, FN_DWRD, KC_END,  KC_MPRV, XXXXXXX,  FN_COPY, KC_PGUP, KC_INS,  FN_OPEN, FN_PSTE, XXXXXXX,\
 // ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
     KC_PAUS, KC_HOME, FN_SNIP, KC_PGDN, FN_FWRD, XXXXXXX,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, FN_MLFT, FN_MRHT,\
 // ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
-    _______, KC_PSCR, FN_PRWN, FN_CLER, XXXXXXX, FN_BWRD,  KC_MNXT, KC_MUTE, KC_VOLU, KC_VOLD, XXXXXXX, _______,\
+    _______, KC_PSCR,  FN_CUT,  FN_CLR, FN_PRWN, FN_BWRD,  KC_MNXT, KC_MUTE, KC_VOLU, KC_VOLD, FN_FIND, _______,\
 // ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
     _______, _______, _______, _______,  MO_BRD, KC_MPLY,  KC_MPLY,  MO_BRD, _______, _______, _______, _______ \
 // └─━━─━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━┘ └─━━─━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┘
@@ -187,8 +191,17 @@ bool process_shift(uint16_t keycode, keyrecord_t *record) {
 bool process_macros(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     switch (keycode) {
+      case FN_CUT:
+        SEND_STRING(SS_LCTRL("x"));
+        return false;
+      case FN_COPY:
+        SEND_STRING(SS_LCTRL("c"));
+        return false;
       case FN_PSTE:
         SEND_STRING(SS_LSFT(SS_TAP(X_INSERT)));
+        return false;
+      case FN_FIND:
+        SEND_STRING(SS_LCTRL("cfv"));
         return false;
 
       case FN_DWRD:
@@ -200,8 +213,8 @@ bool process_macros(uint16_t keycode, keyrecord_t *record) {
       case FN_FWRD:
         SEND_STRING(SS_LCTRL(SS_TAP(X_RIGHT)));
         return false;
-      case FN_CLER:
-        SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SS_TAP(X_DELETE));
+      case FN_CLR:
+        SEND_STRING(SS_LCTRL("a") SS_TAP(X_DELETE));
         return false;
       case FN_OPEN:
         SEND_STRING(SS_TAP(X_END) SS_TAP(X_ENTER));
@@ -222,6 +235,9 @@ bool process_macros(uint16_t keycode, keyrecord_t *record) {
         return false;
       case FN_MRHT:
         SEND_STRING(SS_LGUI(SS_TAP(X_RIGHT)));
+        return false;
+      case FN_WINS:
+        SEND_STRING(SS_LGUI(SS_TAP(X_TAB)));
         return false;
     }
   }
