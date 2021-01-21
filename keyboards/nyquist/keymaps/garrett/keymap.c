@@ -10,9 +10,8 @@ extern keymap_config_t keymap_config;
 // entirely and just use numbers.
 #define _QWERTY 0
 #define _SHIFT 1
-#define _PLOVER 2
-#define _RAISE 3
-#define _BOARD 4
+#define _RAISE 2
+#define _BOARD 3
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
@@ -36,7 +35,6 @@ extern keymap_config_t keymap_config;
 #define MT_RALT MT(MOD_RALT, KC_RIGHT_ANGLE_BRACKET)
 
 // Layer Toggles
-#define TG_PLV TG(_PLOVER)
 #define MO_BRD MO(_BOARD)
 
 // Macro Keys
@@ -58,13 +56,15 @@ enum custom_keycodes {
   FN_MLFT,
   FN_MRHT,
   FN_WINS,
+
+  FN_EMO,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT( \
 // ┌─━━─━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━┐ ┌─━━─━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┐
-    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    TG_PLV, \
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    FN_EMO, \
 // ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,\
 // ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
@@ -87,20 +87,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCBR, _______, _______, _______, _______, _______,  _______, _______, KC_MINS, KC_EQL,  _______, KC_RCBR,\
 // ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
     MT_LSCTL,_______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, MT_RSCTL\
-// └─━━─━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━┘ └─━━─━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┘
-),
-
-[_PLOVER] = LAYOUT( \
-// ┌─━━─━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━┐ ┌─━━─━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┬━━━━━━━━┐
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TG_PLV, \
-// ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
-    STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,   STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC, \
-// ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
-    STN_FN,  STN_S1,  STN_TL,  STN_PL,  STN_HL,  STN_ST1,  STN_ST3, STN_FR,  STN_PR,  STN_LR,  STN_TR,  STN_DR, \
-// ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
-    XXXXXXX, STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2,  STN_ST4, STN_RR,  STN_BR,  STN_GR,  STN_SR,  STN_ZR, \
-// ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━┦ ├─━━─━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━╀━━━━━━━━┦
-    XXXXXXX, XXXXXXX, XXXXXXX, STN_A,   STN_O,   XXXXXXX,  XXXXXXX, STN_E,   STN_U,   STN_PWR, STN_RE1, STN_RE2 \
 // └─━━─━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━┘ └─━━─━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┴━━━━━━━━┘
 ),
 
@@ -143,10 +129,11 @@ typedef struct {
 const hsv layer_colors[] = {
 [_QWERTY] = {0, 255, 255},
 [_SHIFT] = {0, 255, 255},
-[_PLOVER] = {0, 255, 255},
 [_RAISE] = {0, 255, 255},
 [_BOARD] = {0, 255, 255}
 };
+
+static bool shifted = false;
 
 bool register_unshifted_code(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
@@ -154,7 +141,9 @@ bool register_unshifted_code(uint16_t keycode, keyrecord_t *record) {
     register_code(keycode);
   } else {
     unregister_code(keycode);
-    register_mods(MOD_LSFT);
+    if (shifted == true) {
+      register_mods(MOD_LSFT);
+    }
   }
   return false;
 }
@@ -167,6 +156,7 @@ bool process_shift(uint16_t keycode, keyrecord_t *record) {
     case MT_RSFT: {
       if (record->event.pressed) {
         register_mods(MOD_LSFT);
+        shifted = true;
         layer_on(_SHIFT);
         sftRecord = *record;
       } else {
@@ -178,6 +168,7 @@ bool process_shift(uint16_t keycode, keyrecord_t *record) {
           unregister_code(keycode);
         }
         unregister_mods(MOD_LSFT);
+        shifted = false;
         layer_off(_SHIFT);
       }
       return false;
@@ -238,6 +229,10 @@ bool process_macros(uint16_t keycode, keyrecord_t *record) {
         return false;
       case FN_WINS:
         SEND_STRING(SS_LGUI(SS_TAP(X_TAB)));
+        return false;
+
+      case FN_EMO:
+        SEND_STRING(SS_LGUI(SS_TAP(X_DOT)));
         return false;
     }
   }
